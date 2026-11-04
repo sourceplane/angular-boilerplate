@@ -3,9 +3,9 @@
 Vercel's [Angular Boilerplate](https://github.com/vercel/examples/tree/main/framework-boilerplates/angular)
 template — the Angular CLI's welcome page, with its resources, its Next Steps
 terminal and its router, and the template's specs — moved from Angular 15 to
-Angular 22, running on **Cloudflare Workers + Static Assets**, deployed by
-[Orun](https://github.com/sourceplane/orun) to stage and prod on every merge.
-Packaging it as an Orun baseline is the next milestone (NG2).
+Angular 22, running on **Cloudflare Workers + Static Assets**, and packaged
+as an **Orun baseline**: one command takes a new Angular app from nothing to
+live on stage and prod, in its own repository, under its own name.
 
 Angular builds fully static: `ng build` (Angular's esbuild application
 builder) writes the app's shell, its hashed JavaScript and CSS bundles and
@@ -15,8 +15,55 @@ single-page app: every page address is answered with the app, whose router
 shows the page, and a missing file is a 404. The welcome page, its styles and
 its specs do not change; the app's name moves into one module, the app is
 standalone (Angular 22's own shape — its test builder cannot compile the
-template's NgModule), and the specs run on Angular's own Vitest builder. See [`specs/epics/angular-boilerplate`](specs/epics/angular-boilerplate/README.md)
+template's NgModule), and the specs run on Angular's own Vitest builder. What
+the baseline adds is everything needed to make a copy of it somebody else's —
+built the way [cirrus-baseline](https://github.com/sourceplane/cirrus-baseline)
+is. See [`specs/epics/angular-boilerplate`](specs/epics/angular-boilerplate/README.md)
 for the design, the milestones and the as-built status.
+
+## Instantiating an app
+
+```bash
+git clone --depth 1 --branch <baseline-tag> https://github.com/sourceplane/angular-boilerplate
+cd angular-boilerplate
+orun new --blueprint repo-blueprint.yaml --out ~/sites/acme-app --run-hooks --resume \
+  --set reponame=acme-app --set productname="Acme App" \
+  --set githuborg=acme-inc --set subdomain=<workers-dev-subdomain>
+```
+
+Or, once the platform's registry lists it, from the Orun console (Baselines →
+`angular-boilerplate` → Build). Two phases — `01-product` (the repository
+created, then the whole app in one pull request, deployed to stage and prod
+and smoke-tested) and `03-docs` (the live deployment recorded) — each landing
+one pull request in the new repository. **[BOOTSTRAP.md](BOOTSTRAP.md)** is
+the operator guide; [docs/phases/](docs/phases/README.md) has a page per
+phase.
+
+The new repository receives the **app only** — the app and its tests, its
+CI, its tooling, a README of its own and its operating contract — renamed
+throughout to the app's name, repository and Cloudflare Worker. None of this
+repository's machinery ships.
+
+| What makes it a baseline | Where |
+|---|---|
+| The console card (inputs, secrets, programme) | `blueprint.yaml` |
+| The build document (modules, phases, hooks) | `repo-blueprint.yaml` |
+| This tree's identity, and the bootstrap's task contracts | `.baseline/` |
+| The rename engine | `tooling/rebrand/rebrand.mjs` |
+| The bootstrap's helpers (deferrals, redeploy marker, work-tree strip) | `tooling/bootstrap/` |
+| The deployment-record renderer | `hooks/render-deployment-docs.sh` |
+| The app's README and context pack | `.baseline/product/README.md`, `ai/context/` |
+| The baseline's tests: contract, leak, offline bootstrap, end to end | `testing/`, `.github/workflows/baseline.yml` |
+| Cutting a `baseline-vN` tag | `.github/workflows/tag.yml` |
+
+The framework's name is not the app's: Angular's packages (`@angular/core`,
+`@angular/build`), its CLI (`ng build`) and its workspace file
+(`angular.json`) never spell this repository's slug, so the rename engine has
+nothing of the framework's to mask. The app's display name is one literal,
+`SITE_NAME` in `apps/web/src/app/site.ts` (the template's own name,
+`angular-test`, the Angular CLI project it was generated as); the placement
+tier fails on any placed app that spells it anywhere else, or imports a
+scoped module that is not `@angular`.
 
 ## What is here (the app)
 
@@ -63,6 +110,8 @@ pnpm --filter @app/web preview    # wrangler dev over the built app and its Work
 | Workflow | What it runs | Ships to an app |
 |---|---|---|
 | `ci.yml` | the Orun pipeline, and the only workflow an app carries: `orun plan --changed`, then one job per lane. A pull request runs the verify lanes (the app built and dry-deployed per environment; the tests' `quick-check` lane installs and checks the package, it does not run them), except the bootstrap's own landings (`orun/BASE-*`), where `plan` alone is the check; a merge deploys stage → prod. It plans nothing while `intent.yaml` names the placeholder workspace `ws_CHANGE_ME`, as this repository does. A manual run (Orunbase's Deploy button, or Run workflow on `main`) plans the environment and components it names under the push-to-main trigger, so they deploy as a merge deploys them | yes |
+| `baseline.yml` | the baseline's own tiers: contract tests, the blueprint read by the pinned orun, the leak gate, the offline bootstrap, the app built in a staged job tree, dry-deployed and served | no |
+| `tag.yml` | cuts a `baseline-vN` tag (manual) | no |
 
 ## Credits
 

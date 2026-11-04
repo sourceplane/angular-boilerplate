@@ -9,7 +9,7 @@ metadata:
 spec:
   title: "Vercel's Angular Boilerplate on Cloudflare Workers"
   summary: "Vercel's Angular example — the Angular CLI's welcome app: a toolbar, the app-is-running banner, the Resources cards, the Next Steps terminal and the router, with the CLI's specs — moved from Angular 15 to Angular 22 (standalone, Angular's esbuild application builder, its Vitest test builder), built fully static and served as Cloudflare Workers Static Assets behind one small Worker as a single-page app, inside the Cirrus baseline's repository conventions, and becomes an Orun baseline that takes a new Angular app from nothing to live on stage and prod in one landing."
-  state: started
+  state: completed
   milestones:
     - name: "NG0 — the spec"
       exitCriteria:
