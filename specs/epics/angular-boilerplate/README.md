@@ -11,7 +11,7 @@ landing.**
 
 | | |
 |---|---|
-| Status | In progress — NG1 on main: the site runs on Workers |
+| Status | ✅ Shipped (`baseline-v1`) — proven offline in Baseline CI; not yet live (risk NG-A) |
 | Upstream | [vercel/examples](https://github.com/vercel/examples) `framework-boilerplates/angular` (MIT), at `de86723` (2026-10-16; the folder last changed in `cb2643e`): the Angular CLI 15's welcome app |
 | Reference | [docusaurus](https://github.com/sourceplane/docusaurus) — the same static build behind one Worker, its tests and its bootstrap; [astro-boilerplate](https://github.com/sourceplane/astro-boilerplate) — the same `<framework>-boilerplate` identity and rename rules |
 | Key | `NG` |

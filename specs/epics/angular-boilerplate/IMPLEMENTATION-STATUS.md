@@ -4,7 +4,7 @@
 |---|---|---|
 | NG0 — the spec | ✅ | the repository's first commit and NG-1 |
 | NG1 — the app on Workers | ✅ | NG-2 |
-| NG2 — a baseline | planned | NG-3 |
+| NG2 — a baseline | ✅ | NG-3, tagged `baseline-v1` |
 
 ## Departures from the upstream template
 
