@@ -1,0 +1,16 @@
+{
+  "extends": "../../tooling/tsconfig/web.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "types": ["node"],
+    "paths": {
+      "@/*": ["../../apps/web/*"]
+    }
+  },
+  "include": ["src/**/*.ts"]
+}

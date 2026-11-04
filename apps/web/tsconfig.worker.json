@@ -1,0 +1,14 @@
+{
+  // The Worker in front of the assets (worker/index.ts): its own program. It
+  // declares the one binding it uses (ASSETS) itself, so the DOM lib's
+  // Request and Response are all the types it needs.
+  "extends": "../../tooling/tsconfig/web.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "incremental": false,
+    "noEmit": true
+  },
+  "include": ["worker/**/*.ts"]
+}
