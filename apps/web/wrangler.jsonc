@@ -1,0 +1,19 @@
+// The Worker and the static app `ng build` emits (dist/browser). The app is
+// a single-page application: it renders in the browser and its router owns
+// every page address, so a navigation that matches no file is answered with
+// index.html (`single-page-application`) and the router shows the page. A
+// request that is not a navigation and matches no file (a missing script or
+// image) reaches the Worker, which hands it back to the assets: a 404.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "angular-boilerplate-web",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": "./dist/browser",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "observability": { "enabled": true }
+}
