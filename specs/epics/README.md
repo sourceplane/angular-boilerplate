@@ -7,5 +7,6 @@ folder is the adoption; the merge creates the epic in the workspace.
 
 | Epic | Cluster | Status | What it is |
 |------|---------|--------|------------|
+| [`angular-boilerplate/`](./angular-boilerplate/) | **NG** | In progress (NG0) | Vercel's Angular Boilerplate — the Angular CLI's welcome app, moved to Angular 22 — built static and served as Cloudflare Workers Static Assets behind one Worker as a single-page app, and an Orun baseline that instantiates it (NG2) |
 
 As-built ≠ intent: what shipped lives in each epic's `IMPLEMENTATION-STATUS.md`.
