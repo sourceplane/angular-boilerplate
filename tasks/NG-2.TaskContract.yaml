@@ -1,0 +1,18 @@
+apiVersion: orun.io/v1
+kind: TaskContract
+metadata:
+  name: NG-2
+  title: "The app on Workers"
+spec:
+  goal: Vercel's Angular Boilerplate runs on Angular 22 on Cloudflare Workers + Static Assets — built static, served as assets behind one Worker as a single-page app — with its specs and tests, and its README saying how it maps to Vercel
+  affects:
+    - apps/web
+    - tests/web
+    - pnpm-lock.yaml
+    - pnpm-workspace.yaml
+    - README.md
+    - .gitignore
+  doneWhen:
+    - pnpm typecheck, lint, test and build are green
+    - wrangler dev serves the shell, its bundles and the favicon, every page address as the app, and a missing file as a 404
+  gates: []

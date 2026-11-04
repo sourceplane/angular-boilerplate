@@ -1,0 +1,30 @@
+# The epic's declaration. metadata.name equals the directory name; metadata.key
+# is the task-key prefix this epic reserves (NG → NG-1, NG-2, …). Owner, target
+# date and health are the platform's — never written here.
+apiVersion: orun.io/v1
+kind: Epic
+metadata:
+  name: angular-boilerplate
+  key: NG
+spec:
+  title: "Vercel's Angular Boilerplate on Cloudflare Workers"
+  summary: "Vercel's Angular example — the Angular CLI's welcome app: a toolbar, the app-is-running banner, the Resources cards, the Next Steps terminal and the router, with the CLI's specs — moved from Angular 15 to Angular 22 (standalone, Angular's esbuild application builder, its Vitest test builder), built fully static and served as Cloudflare Workers Static Assets behind one small Worker as a single-page app, inside the Cirrus baseline's repository conventions, and becomes an Orun baseline that takes a new Angular app from nothing to live on stage and prod in one landing."
+  state: started
+  milestones:
+    - name: "NG0 — the spec"
+      exitCriteria:
+        - "the repository is born with its intent, CI, tooling and spec index, and this doc set and the task contracts are on main"
+      tasks: [NG-1]
+    - name: "NG1 — the app on Workers"
+      exitCriteria:
+        - "apps/web is the upstream template on Angular 22, built static by the esbuild application builder, with one Worker in front of dist/browser as Workers Static Assets"
+        - "`pnpm typecheck`, `pnpm lint`, `pnpm test` (the template's specs on Angular's Vitest builder, and tests/web) and `pnpm build` are green"
+        - "`wrangler dev` serves the shell, its bundles and the favicon, answers every page address with the app and a missing file with a 404"
+        - "the README says how to run, test, preview and deploy it, and how every Vercel piece maps to Cloudflare"
+      tasks: [NG-2]
+    - name: "NG2 — a baseline"
+      exitCriteria:
+        - "blueprint.yaml (the console card) and repo-blueprint.yaml (the build) take a new Angular app from nothing to live on stage and prod in one landing, then record it"
+        - "an app built from it carries the app only, renamed throughout to its own name, repository and Worker, with the framework's own names intact"
+        - "Baseline CI is green: contract tests, generated component docs, the blueprint read by the pinned orun, the leak gate, the offline bootstrap and the end-to-end tier"
+      tasks: [NG-3]
